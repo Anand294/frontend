@@ -1,38 +1,349 @@
-.App {
-  text-align: center;
+/* Basic resets and font settings */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app {
+  display: flex;
+  min-height: 100vh; /* Allow the app to expand beyond viewport */
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(to right, rgb(0, 218, 0), rgb(0, 0, 100));
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.menu-toggle {
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.logout-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.sidebar {
+  width: 200px;
+  background: white;
+  padding: 20px;
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  z-index: 2;
+  border-style: ridge ;
+  border-radius: 12px;
+
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.content {
+  position: relative;
+  margin-left: 250px;
+  padding: 30px;
+  top: 45px;
+  bottom: 80px;
+  
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border-style: ridge;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-style: ridge;
+  text-align: center;
+  width: calc(100% - 220px);
+  max-width: calc(100% - 330px);
+  min-height: 200px;
+  height: 300px;
+  margin-bottom: 50px;
+  
+  overflow-y: auto; /* Ensure the content scrolls if too long */
+  flex-grow: 1; /* Make sure it grows to fill space */
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+.sidebar.hidden + .content {
+  margin-left: 0px;
+  width: 100%;
+}
+
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 10px;
+  
+  text-align: left;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar button.active {
+  background-color: rgba(109, 139, 122, 0.5);
+  color: yellow;
+  border-radius: 12px;
+  border-style: hidden;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    top: 40px;
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: block;
+  }
+}
+
+.sidebar .visible{
+  display: block;
+}
+
+table th {
+  text-align: left;
+  padding: 12px;
+  background-color: #4CAF50;
   color: white;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+  font-size: 16px;
 }
 
-.App-link {
-  color: #61dafb;
+table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+table tr {
+  
+}
+
+table td, table th {
+  padding: 16px;
+  max-width: 300px;
+  /*min-width: 200px;*/
+  max-height: 300px;
+}
+.textarea-custom {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  resize: both;
+  min-height: 50px;    /* Prevent shrinking below this height */
+  max-height: 200px;   /* Prevent growing too large */
+  min-width: 200px;    /* Minimum width */
+  max-width: 100%;     /* Prevent growing beyond container width */
+  margin-bottom: 15px; /* Space below to avoid overlap with next element */
+  box-sizing: border-box; /* Includes padding in the width calculation */
+}
+
+.textarea-custom:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.inputfield {
+  /*width: 100%;          /* Makes the input take up the full width of its container */
+  padding: 10px;        /* Adds some padding inside the input */
+  margin: 10px 0;       /* Adds space between inputs */
+  border: 1px solid #ccc; /* Sets a light grey border */
+  border-radius: 5px;   /* Rounds the corners of the input */
+  font-size: 16px;      /* Sets the font size */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's width and height */
+}
+
+.inputfield:focus {
+  border-color: #007BFF; /* Changes the border color on focus */
+  outline: none;         /* Removes the default outline on focus */
+}
+
+.formDiv {
+  width: 100%; /* Ensures the form div takes the full width of its container */
+  overflow-x: auto; /* Allows horizontal scrolling if the table overflows */
+}
+
+.formDiv table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  table-layout: fixed; /* Ensures fixed layout for uniform cell sizing */
+  text-align: justify;
+}
+
+.formDiv th {
+  text-align: left;
+  padding: 12px;
+  background-color: #4CAF50; /* Green background for headers */
+  color: white; /* White text for headers */
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+  font-size: 16px;
+  width: 150px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  vertical-align: top;
+  white-space: nowrap; /* Prevents text wrapping */
+  position: sticky;
+  top: 0; /* Stick to the top */
+  z-index: 10; /* Ensures header stays on top while scrolling */
+  border-style: solid;
+}
+
+.formDiv td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+  width: 150px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height for rows */
+  overflow-y: hidden; /* Hide overflow */
+  vertical-align: top; /* Align text to top */
+  white-space: nowrap; /* Prevents text from wrapping */
+  background-color: #fff; /* Adds white background to the cells */
+  border-style: ridge;
+}
+
+.formDiv tr {
+  max-height: 40px; /* Limits the height to 40px for cell content */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+.formDiv tr:nth-child(even) td {
+  background-color: #f2f2f2; /* Alternating row background for better readability */
+}
+
+.formDiv tr:hover td {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+ .dataDiv{
+  max-height:200px;
+  width:300px;
+  overflow-y: auto;
+  overflow: auto;
+ }
+ .suggestions {
+  width:200px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  background: white;
+  position: absolute;
+  z-index: 1000;
+  margin-left: 38%;
+  
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: #83ecb8;
+}
+#dataDiv{
+  max-height: 300px;
+  overflow-x: auto;
+}
+.submitButton {
+
+  margin-top: 1rem;
+
+  margin-right: 1rem;
+
+  background-color: #2a87d0;
+
+  padding-top: 5px;
+
+  padding-bottom: 5px;
+
+  padding-left: 20px;
+
+  padding-right: 20px;
+
+  color: white;
+
+}
+#dashHeader{
+  position: fixed;  /* Fixes the header in place */
+  top: 0;          /* Aligns it to the top */
+  left: 0;         /* Aligns it to the left */
+      /* Ensures it spans the full width */
+  background-color: white; /* Change this to match your design */
+  z-index: 1000;   /* Ensure it stays on top of other content */
+  padding: 10px;   /* Optional: Add padding for aesthetics */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ 
+}
+
+
